@@ -25,10 +25,7 @@ from apps.core.tag.constants import TargetType
 from apps.core.tag.models import Tag
 from apps.node_man import constants, exceptions, models
 from apps.node_man.constants import (
-    BUILT_IN_TAG_DESCRIPTIONS,
-    BUILT_IN_TAG_NAMES,
-    TAG_DESCRIPTION_MAP,
-    TAG_NAME_MAP,
+    INPUT_DESCRIPTION__OUTPUT_NAME_DESCRIPTION_MAP,
     CategoryType,
 )
 from apps.node_man.models import GsePackageDesc
@@ -83,17 +80,16 @@ class GsePackageTools:
         return hashlib.md5(unique_string.encode("utf-8")).hexdigest()
 
     @classmethod
-    def create_agent_tags(cls, tag_descriptions, project):
+    def create_agent_tags(cls, tag_descriptions: List[str], project: str) -> List[Dict[str, str]]:
         tags: List[Dict[str, str]] = []
         for tag_description in tag_descriptions:
             gse_package_desc_obj, _ = GsePackageDesc.objects.get_or_create(
                 project=project, category=CategoryType.official
             )
 
-            if tag_description in BUILT_IN_TAG_NAMES + BUILT_IN_TAG_DESCRIPTIONS:
+            if tag_description in INPUT_DESCRIPTION__OUTPUT_NAME_DESCRIPTION_MAP:
                 # 内置标签，手动指定name和description
-                name: str = TAG_NAME_MAP[tag_description]
-                tag_description: str = TAG_DESCRIPTION_MAP[tag_description]
+                name, tag_description = INPUT_DESCRIPTION__OUTPUT_NAME_DESCRIPTION_MAP[tag_description]
             else:
                 # 自定义标签，自动生成name
                 name: str = GsePackageTools.generate_name_by_description(tag_description)

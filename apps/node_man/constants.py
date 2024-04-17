@@ -1187,6 +1187,7 @@ class OsBitType(EnhanceEnum):
     def cpu_type__os_bit_map(cls):
         return {CpuType.x86: cls.BIT32.value, CpuType.x86_64: cls.BIT64.value, CpuType.aarch64: cls.ARM.value}
 
+
 class AgentVersionType(EnhanceEnum):
     UNIFIED = "unified"
     BY_HOST = "by_host"
@@ -1201,16 +1202,15 @@ class AgentVersionType(EnhanceEnum):
         }
 
 
+INPUT_DESCRIPTION__OUTPUT_NAME_DESCRIPTION_MAP = {
+    "stable": ("stable", _("稳定版本")),
+    "稳定版本": ("stable", _("稳定版本")),
+    "latest": ("latest", _("最新版本")),
+    "最新版本": ("latest", _("最新版本")),
+    "test": ("test", _("测试版本")),
+    "测试版本": ("test", _("测试版本")),
+}
+
 BUILT_IN_TAG_DESCRIPTIONS: List[str] = [_("稳定版本"), _("最新版本"), _("测试版本")]
 BUILT_IN_TAG_NAMES: List[str] = ["stable", "latest", "test"]
-TAG_NAME_MAP = dict(zip(BUILT_IN_TAG_DESCRIPTIONS, BUILT_IN_TAG_NAMES))
-TAG_NAME_MAP.update({name: name for name in BUILT_IN_TAG_NAMES})
-TAG_DESCRIPTION_MAP = {
-    "stable": _("稳定版本"),
-    "latest": _("最新版本"),
-    "test": _("测试版本"),
-    "稳定版本": _("稳定版本"),
-    "最新版本": _("最新版本"),
-    "测试版本": _("测试版本"),
-}
 STABLE_DESCRIPTION = _("稳定版本")
