@@ -363,6 +363,11 @@ class BaseService(Service, LogMixin, DBHelperMixin, PollingTimeoutMixin):
             meta["STEPS"] = []
         return meta
 
+    @staticmethod
+    def get_job_meta(data) -> Dict[str, Any]:
+        meta: Dict[str, Any] = data.get_one_of_inputs("meta", {})
+        return meta
+
     @classmethod
     def get_common_data(cls, data):
         """
